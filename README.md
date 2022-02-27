@@ -53,9 +53,6 @@ def merge_excel_sheets(merged_file, tobe_merged):
                     row_data_list.append(sheet.cell(row=row_idx+1, column=col_idx+1).value)
                 #将表格数据数据放到对应sheet中
                 wb_merged_dict[sheet_name].append(row_data_list)
-            ########################################################################
-            logging.debug('merged excel:"%s" sheet:"%s" row num:%d/%d', excel, sheet_name, sheet_row, sheet.max_row)
-
     #save data without format  (style)
     wb_merged = openpyxl.Workbook() #xlwt.Workbook(encoding = 'UTF-8')
     def_sheet = wb_merged.active
@@ -71,7 +68,6 @@ def merge_excel_sheets(merged_file, tobe_merged):
                 sheet.cell(row=rowx+1, column=colx+1, value=sheet_data[rowx][colx])
         logging.info('merged sheet:"%s" all files with data total row:%d .', sheet_name, len(sheet_data))
     wb_merged.save(merged_file)
-
 def main():
     merged = "最终文件.xlsx"
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
@@ -83,5 +79,4 @@ def main():
             tobe_merged.append(os.path.join(dirname, dn))
         if len(tobe_merged) == 0:
             logging.error("not found xlsx file in dir:%s", dirname)
-    ########################## 
     merge_excel_sheets(merged, tobe_merged)
